@@ -22,11 +22,13 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    final productProvider = Provider.of<ProductDataProvider>(
-      context,
-      listen: false,
-    );
-    productProvider.getProducts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final productProvider = Provider.of<ProductDataProvider>(
+        context,
+        listen: false,
+      );
+      productProvider.getProducts();
+    });
   }
 
   @override
@@ -62,22 +64,76 @@ class _HomePageState extends State<HomePage>
               );
 
             case Status.completed:
-              List<Product> models = productDataModel.dataFuture.products;
+              List<Product> models = productDataModel.filteredProducts;
               return CustomScrollView(
                 physics: BouncingScrollPhysics(),
                 slivers: [
                   SliverToBoxAdapter(
                     child: Container(
                       height: 200,
-                      padding: EdgeInsets.all(defaultPadding),
+                      padding: EdgeInsets.only(
+                        right: defaultPadding,
+                        left: defaultPadding,
+                        top: defaultPadding * 3,
+                        bottom: defaultPadding,
+                      ),
                       alignment: Alignment.centerLeft,
-                      child: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23),),
+                      child: Text(
+                        'Home',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: defaultPadding,
+                        top: defaultPadding / 2,
+                      ),
+                      child: SizedBox(
+                        height: 50,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: defaultPadding / 2,
+                          ),
+                          itemCount: productDataModel.categories.length,
+                          itemBuilder: (context, index) {
+                            final category = productDataModel.categories[index];
+                            final isSelected =
+                                category == productDataModel.selectedCategory;
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: defaultPadding / 2,
+                              ),
+                              child: ChoiceChip(
+                                showCheckmark: false,
+                                label: Text(category),
+                                selected: isSelected,
+                                onSelected: (_) {
+                                  productDataModel.selectCategory(category);
+                                },
+                                selectedColor: secondaryColor,
+                                backgroundColor: Colors.grey[200],
+                                labelStyle: TextStyle(
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding,
                     ),
+
                     sliver: SliverGrid(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         return OurProduct(
@@ -98,7 +154,7 @@ class _HomePageState extends State<HomePage>
                         crossAxisCount: 2,
                         mainAxisSpacing: defaultPadding,
                         crossAxisSpacing: defaultPadding,
-                        childAspectRatio: 0.775,
+                        childAspectRatio: 0.635,
                       ),
                     ),
                   ),
@@ -107,9 +163,30 @@ class _HomePageState extends State<HomePage>
 
             case Status.error:
               return Center(
-                child: Text(
-                  productDataModel.state.message,
-                  style: TextStyle(color: Colors.black),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      productDataModel.state.message,
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                    const SizedBox(height: defaultPadding),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Provider.of<ProductDataProvider>(
+                          context,
+                          listen: false,
+                        ).getProducts();
+                      },
+                      label: Text(
+                        'Try Again',
+                        style: TextStyle(color: textColor),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: secondaryColor,
+                      ),
+                    ),
+                  ],
                 ),
               );
             default:

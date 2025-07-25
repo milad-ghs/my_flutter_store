@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:store/providers/cart_provider.dart';
 import 'package:store/providers/item_count_provider.dart';
 import 'package:store/providers/product_data_provider.dart';
 import 'package:store/providers/title_provider.dart';
@@ -21,15 +22,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ProductDataProvider()),
         ChangeNotifierProvider(create: (context) => TitleProvider()),
         ChangeNotifierProvider(create: (context) => ItemCountProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          textTheme: GoogleFonts.openSansTextTheme()
-        ),
+        theme: ThemeData(textTheme: GoogleFonts.openSansTextTheme()),
         title: 'Store',
         home: SplashScreen(),
-
       ),
     );
   }

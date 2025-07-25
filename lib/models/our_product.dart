@@ -34,6 +34,9 @@ class OurProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(defaultBorderRadius),
                 child: Hero(
                   tag: product.id,
+                  createRectTween: (begin, end) {
+                    return MaterialRectArcTween(begin: begin, end: end);
+                  },
                   child: CachedNetworkImage(
                     imageUrl: product.image,
                     fit: BoxFit.cover,
@@ -43,14 +46,14 @@ class OurProduct extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(defaultPadding / 2),
-            child: Text(product.title, style: TextStyle(color: textColor,fontSize:12 )),
+            padding: const EdgeInsets.only(right :defaultPadding / 2 , top: defaultPadding  , left: defaultPadding / 2 , bottom: defaultPadding / 2),
+            child: Text(product.title, style: TextStyle(color: text2Color,fontSize:12) , maxLines: 2,overflow: TextOverflow.ellipsis),
           ),
           Padding(
             padding: const EdgeInsets.all(defaultPadding / 2),
             child: Text(
               '\$ ${product.price}',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.w700,color: backgroundColor,letterSpacing:1.05,fontSize: 19),
             ),
           ),
         ],

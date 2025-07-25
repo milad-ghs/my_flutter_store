@@ -31,7 +31,6 @@ class _MainWrapperState extends State<MainWrapper> {
   @override
   void initState() {
     super.initState();
-    pageController.removeListener(_pageListener);
     pageController.addListener(_pageListener);
   }
 
