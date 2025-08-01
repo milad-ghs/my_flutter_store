@@ -8,6 +8,7 @@ import 'package:store/screens/profile.dart';
 import 'package:store/screens/setting.dart';
 
 import '../providers/title_provider.dart';
+import '../widgets/cart_icon.dart';
 import 'bottom_nav.dart';
 import 'home_page.dart';
 
@@ -42,18 +43,12 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: bgColor,
       drawer: Drawer(),
       key: _scaffoldKey,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: backgroundColor,
-        shape: CircleBorder(),
-        child: Icon(Icons.store, color: Colors.black54),
-        onPressed: () {},
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         elevation: 0,
         flexibleSpace: ClipRect(
@@ -77,10 +72,9 @@ class _MainWrapperState extends State<MainWrapper> {
 
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset('assets/icons/notification.svg'),
-          ),
+          CartIconWithBadge(onTap: (){
+            pageController.jumpToPage(3);
+          },)
         ],
       ),
       bottomNavigationBar: BottomNav(controller: pageController),

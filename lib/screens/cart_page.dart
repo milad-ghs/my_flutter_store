@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:store/core/constant.dart';
@@ -6,7 +7,8 @@ import '../providers/cart_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+  final bool showAppBar;
+   const CartPage({super.key,this.showAppBar = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,18 @@ class CartPage extends StatelessWidget {
     final cartKeys = cart.items.keys.toList();
 
     return Scaffold(
+      appBar: showAppBar ?
+          AppBar(
+            title:Text('Cart', style: TextStyle(fontWeight: FontWeight.w400)),
+            centerTitle: true,
+              leading: IconButton(
+                icon: Icon(LineAwesomeIcons.arrow_left_solid),
+                onPressed: () => Navigator.pop(context),
+                // color: Colors.black,
+              )
+
+          )
+          :null,
       body:
           cart.itemCount == 0
               ? Center(
@@ -258,10 +272,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
 
-
-
                   /// payment
-
                   Container(
                     padding: const EdgeInsets.all(defaultPadding),
                     decoration: BoxDecoration(
@@ -318,7 +329,7 @@ class CartPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 12),
+                        // SizedBox(height: 12),
                       ],
                     ),
                   ),

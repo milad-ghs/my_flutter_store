@@ -1,7 +1,6 @@
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:store/screens/home_page.dart';
 
 import '../main_wrapper.dart';
 
@@ -16,7 +15,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 6), () {
-      return Navigator.pushReplacement(
+      if (!mounted) return;
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainWrapper()),
       );
@@ -44,7 +44,10 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             SizedBox(height: 50),
-            LoadingAnimationWidget.threeArchedCircle(color: Colors.orangeAccent, size: 50)
+            LoadingAnimationWidget.threeArchedCircle(
+              color: Colors.orangeAccent,
+              size: 50,
+            ),
           ],
         ),
       ),

@@ -189,9 +189,7 @@ class _HomePageState extends State<HomePage>
                   ],
                 ),
               );
-            default:
-              return Container();
-          }
+            }
         },
       ),
     );

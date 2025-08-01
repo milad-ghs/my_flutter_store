@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
 import 'package:store/network/api_provider.dart';
 import 'package:store/network/response_model.dart';
 import '../models/product_model.dart';
+import 'package:flutter/foundation.dart';
+
 
 class ProductDataProvider extends ChangeNotifier {
   ApiProvider apiProvider = ApiProvider();
-  var response;
+  late Response response;
   late ProductsModel dataFuture;
   ResponseModel state = ResponseModel.loading('initial');
 
@@ -30,7 +32,9 @@ class ProductDataProvider extends ChangeNotifier {
       }
       notifyListeners();
     } catch (ex) {
-      print('catch error: $ex');
+      if (kDebugMode) {
+        print('catch error: $ex');
+      }
       state = ResponseModel.error('Please check your connection ');
       notifyListeners();
     }

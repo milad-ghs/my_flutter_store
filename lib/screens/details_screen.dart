@@ -8,6 +8,7 @@ import '../models/product_model.dart';
 import 'package:delayed_widget/delayed_widget.dart';
 
 import '../providers/cart_provider.dart';
+import '../widgets/cart_icon.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Product product;
@@ -22,7 +23,7 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: primaryColor.withAlpha(200),
+        backgroundColor: Colors.white,
         title: Text('Details', style: TextStyle(fontWeight: FontWeight.w400)),
         centerTitle: true,
         elevation: 0,
@@ -32,14 +33,15 @@ class DetailsScreen extends StatelessWidget {
           // color: Colors.black,
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CartPage()),
-              );
-            },
-            icon: Icon(LineAwesomeIcons.cart_plus_solid),
+          Consumer<CartProvider>(
+            builder: (_, cartProvider, __) => CartIconWithBadge(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage(showAppBar: true,)),
+                );
+              },
+            ),
           ),
           IconButton(
             onPressed: () {},
@@ -47,6 +49,7 @@ class DetailsScreen extends StatelessWidget {
           ),
           SizedBox(width: defaultPadding / 3),
         ],
+
       ),
       body: Column(
         children: [
@@ -275,7 +278,7 @@ class DetailsScreen extends StatelessWidget {
                         children: [
                           Icon(
                             LineAwesomeIcons.cart_plus_solid,
-                            color: Colors.black,
+                            color: text2Color,
                           ),
                           SizedBox(width: defaultPadding - 10),
                           Text(
@@ -283,7 +286,7 @@ class DetailsScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: text2Color,
                             ),
                           ),
                         ],

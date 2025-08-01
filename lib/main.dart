@@ -6,7 +6,6 @@ import 'package:store/providers/item_count_provider.dart';
 import 'package:store/providers/product_data_provider.dart';
 import 'package:store/providers/title_provider.dart';
 import 'package:store/screens/intro/splash_screen.dart';
-import 'package:store/screens/main_wrapper.dart';
 
 void main() {
   runApp(const MyApp());
