@@ -11,11 +11,13 @@ class Assets {
   static const String iconsNotification = 'assets/icons/notification.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String imagesAmazon = 'assets/images/amazon.png';
+  static const String imagesIconApp = 'assets/images/icon_app.png';
   static const String imagesMyprofile = 'assets/images/myprofile.jpg';
   static const String imagesNike1 = 'assets/images/nike1.jpg';
   static const String imagesNike2 = 'assets/images/nike2.jpg';
   static const String imagesNike3 = 'assets/images/nike3.jpg';
   static const String imagesNike4 = 'assets/images/nike4.jpg';
   static const String imagesProfile = 'assets/images/profile.jpg';
+  static const String imagesStoreLogo = 'assets/images/store_logo.png';
 
 }

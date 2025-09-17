@@ -58,18 +58,33 @@ class AuthProvider extends ChangeNotifier {
   }
 
 
-  Future<void> setProfileImage(String imagePath) async{
-    if(_currentUser != null){
-    final dir = await getApplicationDocumentsDirectory();
-    final path = '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.png';
-    final file = File(imagePath);
-    final newImage = await file.copy(path);
+  Future<void> setProfileImage(String imagePath) async {
+    if (_currentUser != null) {
+      try {
+        final dir = await getApplicationDocumentsDirectory();
+        final extension = imagePath.split('.').last;
+        final path = '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.$extension';
+        final file = File(imagePath);
 
-   _currentUser!.profileImagePath = newImage.path;
-   _currentUser!.save();
-   notifyListeners();
+        if (!file.existsSync()) {
+          print("❌ فایل وجود ندارد: $imagePath");
+          return;
+        }
+
+        // کپی عکس در حافظه دائمی اپ
+        final newImage = await file.copy(path);
+
+        _currentUser!.profileImagePath = newImage.path;
+        await _currentUser!.save();
+        notifyListeners();
+        print("Saved profile image to: ${newImage.path}");
+
+      } catch (e) {
+        print("❌ خطا در ذخیره عکس: $e");
+      }
     }
   }
+
 
   void logout(BuildContext context) {
     // context.read<CartProvider>().clearCart();

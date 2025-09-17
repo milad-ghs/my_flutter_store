@@ -131,7 +131,7 @@ class _DetailsScreenState extends State<DetailsScreen>
     var width = MediaQuery.of(context).size.width;
     final cart = Provider.of<CartProvider>(context, listen: false);
     final theme = Theme.of(context);
-    final debouncer = Debouncer(milliseconds: 1000);
+    final debouncer = Debouncer(milliseconds: 600);
 
     return Scaffold(
       backgroundColor: AppColor.backgroundLight,

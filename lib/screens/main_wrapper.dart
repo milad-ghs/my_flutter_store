@@ -60,6 +60,7 @@ class _MainWrapperState extends State<MainWrapper> {
     final theme = Theme.of(context);
     final auth = context.read<AuthProvider>();
     final user = auth.currentUser;
+    final path = auth.currentUser?.profileImagePath;
     final displayName = (user?.name != null && user!.name!.isNotEmpty) ? user.name : (user?.phoneNumber ?? "user");
     return AdvancedDrawer(
       drawerCloseSemanticLabel: 'close',
@@ -133,10 +134,10 @@ class _MainWrapperState extends State<MainWrapper> {
                     child: CircleAvatar(
                       radius: 35,
                       backgroundColor: Colors.white.withAlpha(60),
-                      backgroundImage: (user?.profileImagePath != null &&
-                          File(user!.profileImagePath!).existsSync())
-                          ? FileImage(File(user.profileImagePath!))
-                          : null,
+                        backgroundImage: (user?.profileImagePath != null &&
+                            File(user!.profileImagePath!).existsSync())
+                            ? FileImage(File(user.profileImagePath!))
+                            : null,
                       child: (user?.profileImagePath == null ||
                           !(File(user!.profileImagePath!).existsSync()))
                           ? Icon(

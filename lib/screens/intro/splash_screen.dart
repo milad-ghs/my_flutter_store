@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/app_color.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../login.dart';
@@ -21,6 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final auth = context.read<AuthProvider>();
+      auth.loadUser();
+
       Future.delayed(const Duration(seconds: 3), () async {
         if (!mounted) return;
         final auth = context.read<AuthProvider>();
@@ -56,14 +60,17 @@ class _SplashScreenState extends State<SplashScreen> {
               delayDuration: const Duration(milliseconds: 200),
               animationDuration: const Duration(milliseconds: 2000),
               animation: DelayedAnimations.SLIDE_FROM_TOP,
-              child: Image.asset(
-                'assets/images/amazon.png',
-                width: width * 0.8,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: Image.asset(
+                  'assets/images/store_logo.png',
+                  width: width * 0.7,
+                ),
               ),
             ),
             const SizedBox(height: 50),
             LoadingAnimationWidget.threeArchedCircle(
-              color: Colors.orangeAccent,
+              color: AppColor.primary,
               size: 50,
             ),
           ],
